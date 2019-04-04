@@ -22,14 +22,22 @@ router.get('/', function (req, res, next) {
         })
 });
 
+//create
 router.post('/create', function (req, res, next) {
     var name = req.body.name;
     var genre = req.body.genre;
     console.log(`Name : ${name} , Genre : ${genre}`);
-    if (genre === undefined || name === undefined) {
-        res.send('Error');
+    let items = {
+        name: name, genre: genre
     }
-    res.send('OK');
+    database.push().set(items,
+        function (error) {
+            if (error) {
+                res.send(`Data could not be saved.`)
+            } else {
+                res.send(`Data saved successfully.`);
+            }
+        })
 })
 
 module.exports = router;
